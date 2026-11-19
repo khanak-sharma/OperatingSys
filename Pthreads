@@ -1,0 +1,43 @@
+
+#include <iostream>
+#include <pthread.h>
+using namespace std;
+
+int n;
+int arr[100];
+int sum = 0;
+
+void* calculateSum(void* arg)
+{
+    for (int i = 0; i < n; i++)
+    {
+        sum += arr[i];
+    }
+
+    return NULL;
+}
+
+int main()
+{
+    pthread_t thread;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter the numbers:\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+
+    pthread_create(&thread, NULL, calculateSum, NULL);
+
+    pthread_join(thread, NULL);
+
+    cout << "Sum of numbers = " << sum << endl;
+
+    return 0;
+}
+
+//Compilation : g++ 11.cpp -o 11 -pthread./11
